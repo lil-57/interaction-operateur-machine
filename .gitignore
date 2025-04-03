@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pkl
+*.csv
+*.mp4
+*.avi
+.env
+.DS_Store
+.vscode/
+.idea/
+results/
+

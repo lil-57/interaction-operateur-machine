@@ -1,20 +1,25 @@
-# Analyse Interaction Opérateur - Machine
+# Interaction Opérateur - Machine (Rework)
 
-Projet d’analyse vidéo visant à détecter les mouvements techniques d’un opérateur sur une machine.
-L’objectif est d’identifier les risques ergonomiques (TMS) et mécaniques, puis de les afficher
-dans une interface dédiée pour améliorer la sécurité humaine et la durabilité des équipements.
+Ce projet vise à détecter automatiquement les mouvements techniques d’un opérateur manipulant une machine à partir d’une vidéo.
 
-## Objectifs
-- Détecter les mouvements des membres supérieurs de l’opérateur (bras, épaules, coudes…)
-- Évaluer les risques ergonomiques (TMS)
-- Identifier les impacts potentiels sur la dégradation de la machine
-- Afficher les résultats dans une interface claire et interactive
+Grâce à la détection de pose (MediaPipe), les mouvements des bras, épaules, coudes et du dos seront analysés afin :
+- D’identifier les risques ergonomiques (TMS)
+- De mesurer l’impact potentiel sur la dégradation de la machine
+- Et d’afficher ces informations dans une interface simple et claire
 
-## Technologies (prévisionnelles)
-- OpenCV pour l’analyse vidéo
-- Python ou JavaScript pour le traitement
-- Interface Web en HTML/CSS/JS
+## Arborescence
+- `data/` : vidéos sources et données extraites
+- `scripts/` : traitements Python (analyse vidéo)
+- `interface/` : affichage des résultats
+- `results/` : exports visuels ou fichiers
+- `requirements.txt` : dépendances Python
+- `.gitignore` : fichiers à ne pas versionner
+
+## Technologies prévues
+- Python
+- MediaPipe
+- OpenCV
+- Interface Web (HTML/CSS ou Streamlit)
 
 ## Auteur
 Mohamed Ali KAMMOUN – Université de Lorraine
-
