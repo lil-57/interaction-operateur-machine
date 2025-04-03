@@ -8,7 +8,7 @@ import time
 import mediapipe as mp
 
 st.set_page_config(page_title="Analyse TMS", layout="wide")
-st.title("Analyse des interactions opérateur-machine 🦾")
+st.title("Analyse des interactions opérateur-machine 🧫")
 
 # === Fonction angle ===
 def calculate_angle(a, b, c):
@@ -33,18 +33,16 @@ def init_state():
 if "frame_id" not in st.session_state:
     init_state()
 
-# === MediaPipe Pose ===
 if "pose" not in st.session_state:
     st.session_state.pose = mp.solutions.pose.Pose()
 pose = st.session_state.pose
 
-# === Vidéo ===
 video_path = "data/VideoPresse.mp4"
 if not os.path.exists(video_path):
     st.error("Vidéo introuvable")
     st.stop()
 
-# === Interface boutons ===
+# === Boutons ===
 b1, b2, b3 = st.columns(3)
 with b1:
     if st.button("🔁 Réinitialiser"):
@@ -60,7 +58,7 @@ with b3:
         if st.button(label):
             st.session_state.paused = not st.session_state.paused
 
-# === Layout vidéo + graph + tableau ===
+# === Layout ===
 c1, c2 = st.columns([1, 2])
 with c1:
     video_slot = st.empty()
@@ -68,28 +66,8 @@ with c2:
     graph_slot = st.empty()
     table_slot = st.empty()
 
-# === Afficher le premier frame si rien n’est lancé ===
-if not st.session_state.launched:
-    cap = cv2.VideoCapture(video_path)
-    fps = cap.get(cv2.CAP_PROP_FPS)
-    cap.set(cv2.CAP_PROP_POS_FRAMES, fps * 7)
-    ret, frame = cap.read()
-    cap.release()
-    if ret:
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        video_slot.image(frame_rgb, channels="RGB", caption="Vidéo en pause")
-
-    fig, ax = plt.subplots(figsize=(8, 4))
-    ax.set_title("Évolution des angles")
-    ax.set_xlabel("Frame")
-    ax.set_ylabel("Angle (°)")
-    ax.grid(True)
-    graph_slot.pyplot(fig)
-
-    table_slot.dataframe(pd.DataFrame(columns=["Partie", "Mouvements", "Pic critique (°)", "Risque TMS"]), use_container_width=True)
-
-# === Si vidéo lancée mais en pause, afficher l'état actuel sans avancer ===
-if st.session_state.launched and st.session_state.paused:
+# === Affichage en pause ===
+if not st.session_state.launched or st.session_state.paused:
     cap = cv2.VideoCapture(video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
     cap.set(cv2.CAP_PROP_POS_FRAMES, fps * 7 + st.session_state.frame_id)
@@ -135,7 +113,7 @@ if st.session_state.launched and st.session_state.paused:
 
     table_slot.dataframe(pd.DataFrame(summary), use_container_width=True)
 
-# === Lecture vidéo fluide avec analyse en direct ===
+# === Lecture en direct ===
 if st.session_state.launched and not st.session_state.paused:
     cap = cv2.VideoCapture(video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
