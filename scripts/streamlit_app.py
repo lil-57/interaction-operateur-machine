@@ -1,9 +1,10 @@
 import streamlit as st
+import os
+os.system('pip install opencv-python-headless')
 import cv2
 import math
 import pandas as pd
 import matplotlib.pyplot as plt
-import os
 import time
 import mediapipe as mp
 
